@@ -181,6 +181,7 @@ P1 20개 중 **19개 채택**, 게임에 적용했다 (`assets/sprites/`, `src/a
 
 #### 2026-09-26: Vercel 배포
 
+- **이후 변경:** Vercel 프로젝트가 GitHub 저장소와 자동 연결되어 push마다 실제 배포가 되고, GitHub에 팀 이름이 든 배포 주소와 체크 표시가 공개로 남았다. 그래서 `npx vercel git disconnect`로 연결을 끊고, GitHub의 배포 기록·Production 환경을 지웠다. **이제 push해도 배포되지 않는다.** 배포는 `npx vercel --prod`로 직접 하고, Git 연결은 다시 켜지 않는다
 - 사용자가 `npx vercel login`으로 로그인한 뒤 `npx vercel --yes`로 배포. Vercel 프로젝트 `peaceful-streets` 생성, 이 폴더와 연결(`.vercel/`, git 무시)
 - **주의: 미리보기로 배포하려 했으나, 새 프로젝트의 첫 배포는 Vercel이 자동으로 실제 배포(production)로 처리해 바로 공개됐다.** 주소: https://peaceful-streets.vercel.app. 다음부터는 `npx vercel`이 미리보기, `npx vercel --prod`가 실제 배포다
 - 공개 사이트 확인
