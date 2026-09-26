@@ -67,7 +67,7 @@
 | 4. 아트 | ✅ 에셋 사양 `docs/ASSET_SPEC.md`, 참고 그림 `assets/reference/` / ✅ P1 검수·게임 적용 / ✅ 표지판 판자·P2 배경 (Codex 대신 제작) | ✅ P1 픽셀아트 후보 생성 (`assets/generated/`) / ✅ 이미지 불러오기 모듈 |
 | 5. 메뉴 | ✅ 타이틀(로고 다듬기)·시작 배너·일시정지·클리어·설정 / ✅ 터치 조작 화면 | ✅ 화면 상태 전환·소리·배율 설정 저장 |
 | 6. 다듬기 | ✅ 먼지·착지·2단 점프·화면 전환(픽셀 원) | ✅ 기본 효과음 / ✅ 폰트 서브셋 (Claude 대신) |
-| 7. 배포 | ✅ Vercel 설정·배포 파일 제한·보안 헤더 준비 / ⬜ 실제 배포 (사용자 확인 후) | |
+| 7. 배포 | ✅ Vercel 배포: https://peaceful-streets.vercel.app | |
 
 조작감이 1순위이므로 아트(4단계)보다 스테이지·조작(3단계)을 먼저 확정한다.
 
@@ -163,6 +163,17 @@ P1 20개 중 **19개 채택**, 게임에 적용했다 (`assets/sprites/`, `src/a
 
 ### Claude Code
 
+#### 2026-09-26: Vercel 배포
+
+- 사용자가 `npx vercel login`으로 로그인한 뒤 `npx vercel --yes`로 배포. Vercel 프로젝트 `peaceful-streets` 생성, 이 폴더와 연결(`.vercel/`, git 무시)
+- **주의: 미리보기로 배포하려 했으나, 새 프로젝트의 첫 배포는 Vercel이 자동으로 실제 배포(production)로 처리해 바로 공개됐다.** 주소: https://peaceful-streets.vercel.app. 다음부터는 `npx vercel`이 미리보기, `npx vercel --prod`가 실제 배포다
+- 공개 사이트 확인
+  - 공개되지 않아야 할 경로 모두 404: `docs/`, `mockup/`(308 → 404), `scripts/`, `tests/`, `package.json`, `README.md`, 원본 폰트, `assets/generated/`, 에셋 JSON, `.git/`
+  - 보안 헤더 적용: CSP, X-Frame-Options DENY, nosniff, Referrer-Policy, Permissions-Policy
+  - 헤드리스 Chromium으로 데스크톱(960px)·휴대폰 가로(580px, 버튼 옆 여백 배치)에서 게임 시작 → "플레이 중", CSP 위반 0, 실패 응답 0, 에러 0
+  - 이 작업 환경의 헤드리스 브라우저는 외부 HTTPS에 접속할 때 프록시를 직접 지정해야 한다 (지정하지 않으면 페이지 불러오기에서 시간 초과)
+- 게임을 고친 뒤 다시 배포: `npx vercel`(미리보기) → 확인 → `npx vercel --prod`
+
 #### 2026-09-26: 1-1 마무리 — 폰트 서브셋, 완주 확인, Vercel 배포 준비
 
 **사용자 결정**: 추가 콘텐츠 계획 없음. 1-1만 우선 완료하고 Vercel에 배포할 예정
@@ -184,7 +195,7 @@ P1 20개 중 **19개 채택**, 게임에 적용했다 (`assets/sprites/`, `src/a
 - 검증: 배포될 파일만 모은 폴더를 띄우고 보안 헤더를 붙여 데스크톱·휴대폰 가로에서 실행 → CSP 위반 0, 실패 응답 0, 에러 0
 - `.gitignore`에 `.vercel/` 추가, README에 배포·재생성 방법
 
-**남은 것**: 실제 배포는 사용자 확인 후 (Vercel 로그인 필요)
+**남은 것**: 실제 배포 (→ 위 "Vercel 배포" 기록에서 완료)
 
 #### 2026-09-26: (Codex 대신) 표지판 판자 다시 그리기 + P2 배경 이미지
 
