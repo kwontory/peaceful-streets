@@ -1,0 +1,16 @@
+{
+  "frameWidth": 16,
+  "frameHeight": 16,
+  "frames": 4,
+  "durationsMs": [
+    70,
+    70,
+    70,
+    70
+  ],
+  "loop": false,
+  "anchor": {
+    "x": 8,
+    "y": 8
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "frameWidth": 16,
+  "frameHeight": 16,
+  "frames": 4,
+  "durationsMs": [
+    50,
+    50,
+    50,
+    50
+  ],
+  "loop": false,
+  "anchor": {
+    "x": 8,
+    "y": 16
+  },
+  "hitbox": {
+    "x": 3,
+    "y": 2,
+    "width": 10,
+    "height": 14
+  }
+}

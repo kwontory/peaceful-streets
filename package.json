@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "python3 -m http.server 8000 --bind 127.0.0.1",
     "dev:lan": "python3 -m http.server 8000 --bind 0.0.0.0",
+    "assets:p1": "node scripts/build-p1.mjs",
     "test": "node --test tests/*.test.js"
   }
 }

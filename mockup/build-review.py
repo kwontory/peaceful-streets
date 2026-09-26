@@ -5,6 +5,7 @@ claude.ai 아티팩트로 공유하려고 쓴다. 외부 파일을 불러올 수
 게임 코드는 고치지 않고, 묶을 때 두 군데만 바꾼다.
   - locale.js 의 fetch → 페이지에 넣은 문자열(window.__STRINGS)
   - main.js 의 창 크기(window.innerWidth/innerHeight) → 검토 페이지 게임 영역 크기(window.__viewport())
+  - assets.js 의 스프라이트 경로("assets/sprites/...png") → PNG 를 넣은 data URI
 
 사용: python3 mockup/build-review.py <출력 경로>
 """
@@ -91,6 +92,11 @@ def patch(name, code):
         new, n = re.subn(r"export async function loadLocale\(\) \{.*?\n\}", "export async function loadLocale() {\n  strings = window.__STRINGS;\n}", code, flags=re.S)
         assert n == 1, "locale.js 의 loadLocale 을 찾지 못함"
         return new
+    if name == "assets":
+        def inline(m):
+            data = base64.b64encode((ROOT / m.group(1)).read_bytes()).decode()
+            return f'"data:image/png;base64,{data}"'
+        return re.sub(r'"(assets/sprites/[^"]+\.png)"', inline, code)
     if name == "main":
         code = code.replace("window.innerWidth", "window.__viewport().width").replace("window.innerHeight", "window.__viewport().height")
     return code

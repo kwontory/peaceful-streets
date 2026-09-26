@@ -1,0 +1,15 @@
+{
+  "frameWidth": 6,
+  "frameHeight": 4,
+  "frames": 3,
+  "durationsMs": [
+    80,
+    80,
+    80
+  ],
+  "loop": false,
+  "anchor": {
+    "x": 3,
+    "y": 4
+  }
+}
