@@ -1,6 +1,7 @@
-@font-face { font-family: Galmuri11; font-weight: 400; src: url('./assets/fonts/galmuri/Galmuri11.woff2') format('woff2'); }
-@font-face { font-family: Galmuri11; font-weight: 700; src: url('./assets/fonts/galmuri/Galmuri11-Bold.woff2') format('woff2'); }
-@font-face { font-family: Galmuri9; font-weight: 400; src: url('./assets/fonts/galmuri/Galmuri9.woff2') format('woff2'); }
+/* PS Pixel: 게임에 쓰는 글자만 남긴 Galmuri 서브셋 (SIL OFL, 예약 이름 때문에 이름을 바꿈. assets/fonts/ps-pixel/README.md) */
+@font-face { font-family: PSPixel11; font-weight: 400; src: url('./assets/fonts/ps-pixel/PSPixel11.woff') format('woff'); }
+@font-face { font-family: PSPixel11; font-weight: 700; src: url('./assets/fonts/ps-pixel/PSPixel11-Bold.woff') format('woff'); }
+@font-face { font-family: PSPixel9; font-weight: 400; src: url('./assets/fonts/ps-pixel/PSPixel9.woff') format('woff'); }
 html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #2f2a3a; }
 body { display: grid; place-items: center; }
 canvas { display: block; image-rendering: pixelated; image-rendering: crisp-edges; }
@@ -27,7 +28,7 @@ canvas { display: block; image-rendering: pixelated; image-rendering: crisp-edge
     border: 0;
     background: #3d2b33;
     color: #3d2b33;
-    font: 700 12px/1 Galmuri11, sans-serif;
+    font: 700 12px/1 PSPixel11, sans-serif;
     clip-path: polygon(var(--cut) 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, var(--cut) 100%, 0 calc(100% - var(--cut)), 0 var(--cut));
     display: grid; place-items: center;
     touch-action: none; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent;
@@ -65,7 +66,7 @@ canvas { display: block; image-rendering: pixelated; image-rendering: crisp-edge
 @media (pointer: coarse) and (orientation: portrait) {
   body { place-items: start center; }
   main { padding-top: max(56px, env(safe-area-inset-top)); display: grid; justify-items: center; gap: 20px; }
-  .rotate-hint { display: block; margin: 0; padding-inline: 16px; font: 12px/1.6 Galmuri11, sans-serif; color: #bdb2cc; text-align: center; }
+  .rotate-hint { display: block; margin: 0; padding-inline: 16px; font: 12px/1.6 PSPixel11, sans-serif; color: #bdb2cc; text-align: center; }
 }
 @media (pointer: coarse) and (max-width: 360px) {
   .touch-controls button { width: 48px; height: 48px; }

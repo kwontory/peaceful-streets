@@ -5,13 +5,13 @@ export function createTextRenderer(ctx) {
     const key = [value, small, bold, color, outline].join("|");
     if (cache.has(key)) return cache.get(key);
     const size = small ? 10 : 12;
-    const family = small ? "Galmuri9" : "Galmuri11";
+    const family = small ? "PSPixel9" : "PSPixel11";
     const font = `${bold ? 700 : 400} ${size}px ${family}`;
     const measure = document.createElement("canvas").getContext("2d");
     measure.font = font;
     const pad = outline ? 1 : 0;
     const width = Math.max(1, Math.ceil(measure.measureText(value).width) + pad * 2);
-    // Galmuri glyphs can rise above textBaseline=top; keep two clear pixels.
+    // PS Pixel (Galmuri) glyphs can rise above textBaseline=top; keep two clear pixels.
     const height = size + 4 + pad * 2;
     const maskCanvas = document.createElement("canvas");
     maskCanvas.width = width;

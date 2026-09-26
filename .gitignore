@@ -15,6 +15,9 @@
 .zprofile
 .ripgreprc
 
+# Vercel 로컬 연결 정보
+.vercel/
+
 # 빌드 결과 (검토 페이지 등은 스크립트로 다시 만든다)
 mockup/dist/
 node_modules/

@@ -107,9 +107,9 @@ def game_styles():
 
     def font(m):
         data = base64.b64encode((ROOT / m.group(1)).read_bytes()).decode()
-        return f"url('data:font/woff2;base64,{data}')"
+        return f"url('data:font/{m.group(2)};base64,{data}')"
 
-    css = re.sub(r"url\('\./(assets/fonts/[^']+\.woff2)'\)", font, css)
+    css = re.sub(r"url\('\./(assets/fonts/[^']+\.(woff2?))'\)", font, css)
     # 페이지 전체 배치(html/body/main)는 검토 페이지가 정한다
     css = re.sub(r"(?<![\w.#-])(html,\s*body|body|main)\s*\{[^}]*\}", "", css)
     return css

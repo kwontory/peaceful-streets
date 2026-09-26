@@ -192,9 +192,9 @@ async function boot() {
   await loadLocale();
   await Promise.all([
     preloadAssets(),
-    document.fonts.load("400 12px Galmuri11"),
-    document.fonts.load("700 12px Galmuri11"),
-    document.fonts.load("400 10px Galmuri9"),
+    document.fonts.load("400 12px PSPixel11"),
+    document.fonts.load("700 12px PSPixel11"),
+    document.fonts.load("400 10px PSPixel9"),
   ]);
   document.title = t("game.title");
   canvas.setAttribute("aria-label", t("game.canvasLabel"));

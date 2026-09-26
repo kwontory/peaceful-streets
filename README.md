@@ -33,3 +33,9 @@
 - `locales/ko.json`, `src/locale.js`: 키 기반 한국어 문구
 
 Canvas는 내부 해상도 480×270으로 그립니다. 창에 맞는 배율이 2 이상이면 정수 배율, 그보다 작으면 비정수 배율로 확대하며 픽셀 보간을 끕니다. 게임은 타이틀, 시작 배너, 플레이, 일시정지, 클리어 화면을 갖추고 있습니다. 1-1은 이동 → 구덩이 → 가시 → 체크포인트 → 발판과 이동 화분 → 계단 → 깃발 순서입니다. 그림은 목업 기반의 검토용 픽셀아트입니다.
+
+## 에셋과 폰트 다시 만들기
+
+- `npm run assets:p1`, `npm run assets:p2`: 코드 그림(`src/art.js`)에서 픽셀아트 PNG를 `assets/generated/`에 만든다. 검수 후 `assets/sprites/`로 옮긴다
+- `npm run assets:icon`: 탭 아이콘
+- 폰트 서브셋: `scripts/subset-fonts.py` (fonttools 필요). 문구나 기호를 새로 넣으면 다시 실행한다. 배포용 폰트는 Galmuri의 예약 이름 때문에 "PS Pixel"로 이름을 바꿨다 (`assets/fonts/ps-pixel/README.md`)

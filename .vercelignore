@@ -1,0 +1,20 @@
+# 배포에는 게임 실행에 필요한 파일만 올린다.
+# (인수인계·설계 문서, 목업, 원본 폰트, 생성 스크립트, 테스트는 공개하지 않는다)
+/*
+!/index.html
+!/styles.css
+!/vercel.json
+!/src
+!/locales
+!/assets
+
+/assets/*
+!/assets/sprites
+!/assets/icon
+!/assets/fonts
+
+/assets/fonts/*
+!/assets/fonts/ps-pixel
+
+# 에셋 옆의 애니메이션 정보는 게임이 읽지 않는다
+/assets/sprites/**/*.json
