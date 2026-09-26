@@ -213,12 +213,15 @@ function cloud(x, y, w) {
   rect(x + 4, y, w - 8, 6, P.cloud);
   rect(x, y + 4, w, 6, P.cloud);
   rect(x + 8, y - 3, w / 2, 4, P.cloud);
+  rect(x + 2, y + 9, w - 4, 1, P.puffEdge); // 아래 그늘 한 줄
 }
 function drawFar() {
   // 먼 산 능선 두 겹 (가장 흐리게)
   for (let x = 0; x < W; x += 2) {
-    const h1 = 34 + Math.round(9 * Math.sin(x / 61) + 5 * Math.sin(x / 23 + 1));
-    const h2 = 18 + Math.round(7 * Math.sin(x / 41 + 2));
+    // 주기를 480px(한 반복)에 맞춰, 이어 붙이는 곳에서 능선이 끊기지 않게 한다
+    const k = (2 * Math.PI * x) / W;
+    const h1 = 34 + Math.round(9 * Math.sin(k + 0.3) + 5 * Math.sin(3 * k + 1));
+    const h2 = 18 + Math.round(7 * Math.sin(2 * k + 2));
     rect(x, 176 - h1, 2, h1, P.hill);
     rect(x, 186 - h2, 2, h2, P.hill2);
   }
@@ -230,7 +233,7 @@ function drawFar() {
     for (let yy = base - h + 8; yy < base - 8; yy += 9) for (let xx = x + 6; xx < x + w - 6; xx += 9) rect(xx, yy, 4, 3, P.farWin);
   }
   // 낮은 집 실루엣: 뾰족 지붕과 옥상 물탱크를 섞는다
-  const houses = [[0, 40, 50, 0], [96, 30, 60, 1], [128, 44, 38, 0], [176, 36, 56, 1], [214, 48, 46, 0],
+  const houses = [[4, 40, 50, 0], [96, 30, 60, 1], [128, 44, 38, 0], [176, 36, 56, 1], [214, 48, 46, 0],
     [264, 34, 62, 0], [392, 40, 58, 1], [436, 44, 42, 0]];
   for (const [x, w, h, flat] of houses) {
     rect(x, base - h, w, h + 40, P.farWall);

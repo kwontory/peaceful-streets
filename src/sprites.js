@@ -24,6 +24,10 @@ export const SHEETS = {
   air_puff: { w: 13, h: 6, frames: 3 },
   dust: { w: 6, h: 4, frames: 3 },
   poof: { w: 16, h: 16, frames: 4 },
+  // P2 배경: 먼 배경은 게임 y 60, 가까운 배경은 y 74 에 그린다. 480px마다 이어 붙인다
+  bg_far: { w: 480, h: 180, frames: 1 },
+  bg_mid: { w: 480, h: 150, frames: 1 },
+  bg_clouds: { w: 64, h: 16, frames: 3 },
 };
 
 let ctx = null;

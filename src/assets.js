@@ -1,6 +1,9 @@
 // Claude가 검수해 승인한 스프라이트 (docs/ASSET_SPEC.md 7장). 키는 renderer 의 imageFor()/drawFrame() 이름.
 // 파일이 없거나 불러오기에 실패하면 기존 코드 그림으로 그린다.
 export const spriteManifest = {
+  bg_far: "assets/sprites/backgrounds/far.png",
+  bg_mid: "assets/sprites/backgrounds/mid.png",
+  bg_clouds: "assets/sprites/backgrounds/clouds.png",
   air_puff: "assets/sprites/fx/air_puff.png",
   cat_idle: "assets/sprites/player/cat_idle.png",
   cat_jump: "assets/sprites/player/cat_jump.png",
@@ -18,6 +21,7 @@ export const spriteManifest = {
   ground_variants: "assets/sprites/tiles/ground_variants.png",
   platform: "assets/sprites/tiles/platform.png",
   poof: "assets/sprites/fx/poof.png",
+  sign_board: "assets/sprites/objects/sign_board.png",
   sign_post: "assets/sprites/objects/sign_post.png",
   spikes: "assets/sprites/hazards/spikes.png",
 };

@@ -161,9 +161,11 @@ function drawParallax(camera) {
     ctxRef.translate(W, 0); draw();
     ctxRef.restore();
   };
-  layer(0.1, () => { cloud(40, 30, 48); cloud(210, 50, 36); cloud(360, 24, 56); });
-  layer(0.25, drawFar);
-  layer(0.5, drawMid);
+  // 배경 이미지가 있으면 이미지로, 없으면 코드 그림으로. 구름은 64×16 칸 가운데에 그려져 있다
+  const clouds = [[40, 30, 48], [210, 50, 36], [360, 24, 56]];
+  layer(0.1, () => clouds.forEach(([x, y, w], i) => { if (!drawFrame("bg_clouds", i, x - (64 - w) / 2, y - 4)) cloud(x, y, w); }));
+  layer(0.25, () => { if (!drawFrame("bg_far", 0, 0, 60)) drawFar(); });
+  layer(0.5, () => { if (!drawFrame("bg_mid", 0, 0, 74)) drawMid(); });
 }
 
 // 지면 타일 한 칸 (스프라이트). 시트 순서: 윗면 왼·가운데·오른, 속 왼·가운데·오른.

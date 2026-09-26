@@ -64,11 +64,15 @@
 | 1. 기반 | ✅ `docs/DESIGN.md`, 목업, 한글 폰트 검증 | ✅ Canvas 2D 프로토타입과 디자인 기준 전환 |
 | 2. 화면 입히기 | ✅ `src/render.js`·`src/art.js` 최종 비주얼, 피드백 반영 | ✅ 꽃·시간·체크포인트 상태 제공 |
 | 3. 스테이지 | ✅ 1-1 레이아웃 초안 (`mockup/play.js`의 `LEVEL`, 64타일) | ✅ `src/stage.js` 반영 및 완주 경로 테스트 / ⬜ 실제 조작감 피드백 반영 |
-| 4. 아트 | ✅ 에셋 사양 `docs/ASSET_SPEC.md`, 참고 그림 `assets/reference/` / ✅ P1 검수·게임 적용 (19개, 표지판 판자 보류) / ⬜ P2 배경 | ✅ P1 픽셀아트 후보 생성 (`assets/generated/`) / ✅ 이미지 불러오기 모듈 |
+| 4. 아트 | ✅ 에셋 사양 `docs/ASSET_SPEC.md`, 참고 그림 `assets/reference/` / ✅ P1 검수·게임 적용 / ✅ 표지판 판자·P2 배경 (Codex 대신 제작) | ✅ P1 픽셀아트 후보 생성 (`assets/generated/`) / ✅ 이미지 불러오기 모듈 |
 | 5. 메뉴 | ✅ 타이틀(로고 다듬기)·시작 배너·일시정지·클리어·설정 / ✅ 터치 조작 화면 | ✅ 화면 상태 전환·소리·배율 설정 저장 |
 | 6. 다듬기 | ✅ 먼지·착지·2단 점프·화면 전환(픽셀 원) | ✅ 기본 효과음 / ⬜ 폰트 서브셋 |
 
 조작감이 1순위이므로 아트(4단계)보다 스테이지·조작(3단계)을 먼저 확정한다.
+
+## 작업 담당 변경 (2026-09-26)
+
+**Codex 사용량이 소진되어, 사용자 지시로 Claude Code가 Codex 몫의 작업을 이어서 한다.** 아래 "Codex 요청 사항" 중 남은 것(표지판 판자 다시 그리기, P2 배경)은 Claude가 진행하고, 진행 결과는 Claude 작업 기록에 적는다. Codex가 다시 가능해지면 이 절을 확인하고, Claude가 대신한 작업은 다시 하지 않는다.
 
 ## Codex 요청 사항
 
@@ -119,7 +123,7 @@
 4. ✅ 이미지 미리 불러오기 모듈(사양 6장)을 만들었다. 사용법은 아래 Codex 작업 기록 참고. 그리기 코드를 이미지로 바꾸는 것은 Claude가 한다
 5. 새 색이 필요하면 쓰기 전에 이 문서에 제안해 달라
 
-### P1 검수 결과와 다시 그릴 것 (Claude, 2026-09-26) ⬜
+### P1 검수 결과와 다시 그릴 것 (Claude, 2026-09-26) ✅ Claude가 대신 완료 (아래 작업 기록)
 
 P1 20개 중 **19개 채택**, 게임에 적용했다 (`assets/sprites/`, `src/assets.js`의 `spriteManifest`).
 
@@ -157,6 +161,30 @@ P1 20개 중 **19개 채택**, 게임에 적용했다 (`assets/sprites/`, `src/a
 ## 작업 기록
 
 ### Claude Code
+
+#### 2026-09-26: (Codex 대신) 표지판 판자 다시 그리기 + P2 배경 이미지
+
+Codex 사용량이 소진되어 사용자 지시로 Claude가 진행했다 (위 "작업 담당 변경").
+
+**완료한 작업**
+- `scripts/pixel.mjs`(신규): 에셋 생성 공용 도구(비트맵, PNG 저장)를 `scripts/build-p1.mjs`에서 뺐다. P1을 다시 만들어 결과 PNG가 한 픽셀도 바뀌지 않음을 확인
+- `scripts/build-p2.mjs`(신규, `npm run assets:p2`): 게임의 코드 그림에서 `backgrounds/far`(480×180), `backgrounds/mid`(480×150), `backgrounds/clouds`(64×16×3), `objects/sign_board`(24×24)를 만든다. 반투명 그늘 색은 아래 색과 섞어 불투명하게 저장
+- 먼 산 능선의 주기를 480px에 맞춤: 이전에는 반복 경계에서 능선이 6px 튀었다 (안쪽은 2px마다 최대 1px) → 이제 경계에서도 1px 이내. 먼 동네 첫 집을 4px 안으로 옮겨 경계에서 지붕이 잘리지 않게 함. 구름 아래에 옅은 그늘 한 줄
+- 표지판 판자: 늘릴 때 무늬가 늘어나지 않도록 무늬 없는 판자로. 게임 크기(94×44)에서 기존 코드 그림과 픽셀까지 같음
+- 네 개 모두 채택해 `assets/sprites/`에 넣고 `spriteManifest`·`SHEETS`에 등록. `render.js`의 배경 3겹이 이미지로 그린다 (없으면 코드 그림)
+
+**검수**
+- 반투명 0개. 배경의 팔레트 밖 색 7가지는 그늘이 벽색과 섞인 색 (사양에 예외로 적음)
+- 배경을 이미지와 코드 그림으로 같은 카메라 위치(0, 300, 544)에서 그려 비교: 다른 픽셀 618개, 모두 색 값 ±1 차이(캔버스와 PNG 도구의 반올림 차이). 위치·이어 붙이기 어긋남 없음
+- 두 번 이어 붙인 배경을 5배로 확대해 이음새 확인: 능선·전선·지붕이 끊김 없이 이어짐
+
+**수정한 파일**: `scripts/pixel.mjs`, `scripts/build-p2.mjs`(신규), `scripts/build-p1.mjs`, `package.json`, `mockup/lib.js`, `src/art.js`(재생성), `src/assets.js`, `src/sprites.js`, `src/render.js`, `assets/generated/backgrounds/`, `assets/sprites/backgrounds/`, `assets/*/objects/sign_board.png`, `mockup/review.html`, `docs/ASSET_SPEC.md`, `docs/HANDOFF.md`
+
+**테스트 결과**: `npm test` 23개 통과. 실제 게임 타이틀·플레이 화면에서 이미지 불러오기 실패 없음, 콘솔 에러 없음. 검토 페이지 다시 게시
+
+**남은 것**
+- P3 UI 에셋(선택)
+- 폰트 서브셋, 실제 휴대폰 조작 확인 (Codex 담당이었던 기술 작업)
 
 #### 2026-09-26: P1 에셋 검수와 게임 적용
 
