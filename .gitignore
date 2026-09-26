@@ -19,4 +19,8 @@
 mockup/dist/
 node_modules/
 
+# 편집기 임시 파일
+*.swp
+*.swo
+*~
 .DS_Store

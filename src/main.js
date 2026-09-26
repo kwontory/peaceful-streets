@@ -151,6 +151,11 @@ function fit() {
   }
   canvas.style.width = `${canvas.width * scale}px`;
   canvas.style.height = `${canvas.height * scale}px`;
+  // 터치 버튼이 게임 화면을 기준으로 자리 잡도록 위치를 CSS에 알린다 (HUD 한 줄 = 게임 24px)
+  const box = canvas.getBoundingClientRect();
+  const style = document.documentElement.style;
+  style.setProperty("--game-hud-bottom", `${Math.round(box.top + 24 * scale)}px`);
+  style.setProperty("--game-right-gap", `${Math.round(window.innerWidth - box.right)}px`);
 }
 window.addEventListener("resize", fit);
 

@@ -385,6 +385,18 @@ function toggle(x, y, on) {
   rect(kx + 1, y + 2, 8, 7, P.cream);
 }
 
+// 두세 개 중 하나를 고르는 칸 (오른쪽 끝 기준). 고른 칸은 민트, 나머지는 크림
+function segmented(right, y, labels, chosen) {
+  const widths = labels.map((label) => drawText(label, -1000, -1000, { small: true }) + 10);
+  let x = right - widths.reduce((a, b) => a + b, 0) - (labels.length - 1);
+  rect(x - 1, y, right - x + 2, 14, P.outline);
+  labels.forEach((label, i) => {
+    rect(x, y + 1, widths[i], 12, i === chosen ? P.flag : P.cream);
+    drawText(label, x + widths[i] / 2, y, { small: true, align: "center", color: i === chosen ? P.outline : P.midFrame });
+    x += widths[i] + 1;
+  });
+}
+
 function settingsScreen(ui) {
   rect(0, 0, W, H, DIM);
   const px = W / 2 - 150, pw = 300;
@@ -413,7 +425,7 @@ function settingsScreen(ui) {
       menuHitboxes.push({ index, x, y: y - 3, width: w, height: 20 });
       if (selected) { rect(x, y - 2, w, 17, P.focus); drawText("▶", x - 12 + bump, y); }
       sprite(ui.soundEnabled ? SPEAKER : SPEAKER_OFF, ICON_MAP, x + 6, y + 3);
-      drawText(t("settings.sound"), x + 20, y);
+      drawText(t("settings.sound"), x + 22, y);
       const status = t(ui.soundEnabled ? "settings.on" : "settings.off");
       const tx = x + w - 34;
       toggle(tx, y + 1, ui.soundEnabled);
@@ -422,11 +434,13 @@ function settingsScreen(ui) {
       const y = 178, x = px + 20, w = pw - 40;
       menuHitboxes.push({ index, x, y: y - 3, width: w, height: 20 });
       if (selected) { rect(x, y - 2, w, 17, P.focus); drawText("▶", x - 12 + bump, y); }
-      rect(x + 6, y + 2, 11, 8, P.outline);
-      rect(x + 7, y + 3, 9, 5, P.cream);
-      rect(x + 10, y + 10, 4, 2, P.outline);
-      drawText(t("settings.scale"), x + 20, y);
-      drawText(t(ui.compact ? "settings.small" : "settings.auto"), x + w - 8, y + 1, { small: true, align: "right" });
+      // 모니터 아이콘 (10×10)
+      rect(x + 5, y + 2, 10, 7, P.outline);
+      rect(x + 6, y + 3, 8, 5, P.cream);
+      rect(x + 8, y + 9, 4, 1, P.outline);
+      rect(x + 7, y + 10, 6, 1, P.outline);
+      drawText(t("settings.scale"), x + 22, y);
+      segmented(x + w - 6, y + 1, [t("settings.auto"), t("settings.small")], ui.compact ? 1 : 0);
     } else {
       const label = t("settings.back"), y = 207;
       const lw = drawText(label, -1000, -1000);
