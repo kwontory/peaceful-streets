@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title></title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main>
+      <canvas id="game" width="480" height="270"></canvas>
+      <div id="touch-controls" class="touch-controls" role="group">
+        <!-- 메뉴는 화면을 직접 눌러 고른다. 플레이에 필요한 ◀ ▶ 점프만 크게 둔다. 아이콘은 픽셀 격자 SVG -->
+        <div class="touch-pad">
+          <button type="button" data-control="left" data-label="touch.left"><svg viewBox="0 0 8 8" aria-hidden="true"><path d="M6 0h1v8H6zM5 1h1v6H5zM4 2h1v4H4zM3 3h1v2H3z"/></svg></button>
+          <button type="button" data-control="right" data-label="touch.right"><svg viewBox="0 0 8 8" aria-hidden="true"><path d="M1 0h1v8H1zM2 1h1v6H2zM3 2h1v4H3zM4 3h1v2H4z"/></svg></button>
+        </div>
+        <div class="touch-utility">
+          <button type="button" data-control="mute" data-label="touch.mute" aria-pressed="false"><svg viewBox="0 0 8 8" aria-hidden="true"><path d="M0 3h2v2H0zM2 2h1v4H2zM3 1h1v6H3z"/><path class="icon-on" d="M5 2h1v1H5zM6 3h1v2H6zM5 5h1v1H5z"/><path class="icon-off" d="M5 2h1v1H5zM7 2h1v1H7zM6 3h1v2H6zM5 5h1v1H5zM7 5h1v1H7z"/></svg></button>
+          <button type="button" data-control="pause" data-label="touch.pause"><svg viewBox="0 0 8 8" aria-hidden="true"><path d="M2 1h1v6H2zM5 1h1v6H5z"/></svg></button>
+        </div>
+        <div class="touch-actions">
+          <button type="button" data-control="jump" data-label="touch.jump" data-text="touch.jumpButton"></button>
+        </div>
+      </div>
+      <p class="rotate-hint" data-text="touch.rotate"></p>
+      <p id="status" class="sr-only" role="status" aria-live="polite"></p>
+    </main>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

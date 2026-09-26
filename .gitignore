@@ -1,0 +1,22 @@
+# 개인·도구 설정 (커밋하지 않음)
+.claude/
+.gstack/
+.vscode
+.idea
+.mcp.json
+
+# 작업 환경이 프로젝트 루트에 만드는 자리표시 파일
+.gitconfig
+.gitmodules
+.profile
+.bashrc
+.bash_profile
+.zshrc
+.zprofile
+.ripgreprc
+
+# 빌드 결과 (검토 페이지 등은 스크립트로 다시 만든다)
+mockup/dist/
+node_modules/
+
+.DS_Store
