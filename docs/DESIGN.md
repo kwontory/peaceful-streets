@@ -97,7 +97,7 @@
 
 - **Galmuri11 12px** (본문, 메뉴, HUD), **Galmuri11 Bold 12px** (제목), **Galmuri9 10px** (작은 안내).
 - 이 크기에서만 안티앨리어싱 없이 픽셀이 정확히 맞는다 (브라우저에서 측정: 12px / 10px에서 반투명 픽셀 0개. 다른 크기는 흐려진다). **다른 크기를 쓰지 말고, 크게 보여야 하면 정수배(×2, ×3)로 확대한다.**
-- 폰트 파일: 게임은 `assets/fonts/ps-pixel/`(게임에 쓰는 글자만 남긴 서브셋, 3종 합계 51KB, CSS 이름 `PSPixel11`·`PSPixel9`)을 쓴다. 원본 `assets/fonts/galmuri/`는 목업용. 라이선스는 SIL OFL 1.1이며, 예약 이름 때문에 서브셋은 이름을 바꿨다. **새 문구나 기호를 넣으면 `scripts/subset-fonts.py`를 다시 실행**한다 (안 하면 그 글자만 다른 글꼴로 흐리게 나온다)
+- 폰트 파일: 서브셋 `assets/fonts/ps-pixel/`(게임에 쓰는 글자만, SIL OFL 1.1, 예약 이름 때문에 이름을 바꿈). 원본 `assets/fonts/galmuri/`는 목업용. **게임은 웹폰트를 쓰지 않는다.** `scripts/build-font-atlas.mjs`가 서브셋의 글자 픽셀을 `src/font-data.js`로 뽑고, `src/text.js`가 그 픽셀로 그린다 (삼성 인터넷 등은 캔버스에서 웹폰트를 무시하고 사용자 설정 글꼴로 그려 글자가 뭉개졌다). 점프 버튼·세로 안내 같은 HTML 글자도 같은 방식(`textElement`). **새 문구나 기호를 넣으면 `scripts/subset-fonts.py` → `npm run assets:font` 순서로 다시 만든다** (`tests/font-data.test.js`가 빠진 글자를 잡는다)
 - 캔버스에 텍스트를 그릴 때 **위쪽에 2px 여백**이 필요하다. Galmuri 글리프 윗줄이 `textBaseline='top'` 기준선보다 위에서 시작해, 여백이 없으면 첫 행이 잘린다 (ㄷ→ㄴ, ㅁ→ㅂ로 보이는 문제를 실제로 확인함).
 - 게임 화면 위 글자: `cream` 글자 + `outline` 1px 외곽선. 패널 위 글자: `outline` 색, 외곽선 없음.
 - 모든 문구는 `locales/ko.json`의 키로 관리한다. 코드에 한글 문자열을 직접 쓰지 않는다.

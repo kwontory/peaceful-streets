@@ -8,6 +8,7 @@
     "assets:p1": "node scripts/build-p1.mjs",
     "assets:p2": "node scripts/build-p2.mjs",
     "assets:icon": "node scripts/build-icon.mjs",
+    "assets:font": "node scripts/build-font-atlas.mjs",
     "test": "node --test tests/*.test.js"
   }
 }

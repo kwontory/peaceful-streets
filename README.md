@@ -56,4 +56,4 @@ npm run dev
 
 - `npm run assets:p1`, `npm run assets:p2`: 픽셀아트 PNG를 `assets/generated/`에 새로 만듭니다. 확인한 뒤 `assets/sprites/`로 옮겨 씁니다.
 - `npm run assets:icon`: 브라우저 탭 아이콘을 만듭니다.
-- 폰트는 [Galmuri](https://github.com/quiple/galmuri)에서 게임에 쓰는 글자만 추려 "PS Pixel"이라는 이름으로 넣었습니다. 원본 폰트 라이선스(SIL OFL)의 예약 이름 규정 때문에 이름을 바꿨으며, 문구에 새 글자를 넣었다면 `scripts/subset-fonts.py`를 다시 실행해야 합니다.
+- 폰트는 [Galmuri](https://github.com/quiple/galmuri)에서 게임에 쓰는 글자만 추려 "PS Pixel"이라는 이름으로 넣었습니다. 원본 폰트 라이선스(SIL OFL)의 예약 이름 규정 때문에 이름을 바꿨으며, 게임은 이 폰트를 브라우저 글꼴로 쓰지 않고, 글자 픽셀을 뽑아 둔 `src/font-data.js`로 직접 그립니다. 그래서 휴대폰에 설정한 글꼴과 상관없이 똑같이 보입니다. 문구에 새 글자를 넣었다면 `scripts/subset-fonts.py`, `npm run assets:font`를 차례로 다시 실행해야 합니다.

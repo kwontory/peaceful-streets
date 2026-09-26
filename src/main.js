@@ -5,6 +5,7 @@ import { loadLocale, t } from "./locale.js";
 import { render, menuHitboxes } from "./render.js";
 import { settingsMenu } from "./settings-menu.js";
 import { preloadAssets } from "./assets.js";
+import { textElement } from "./text.js";
 
 const canvas = document.querySelector("#game");
 const ctx = canvas.getContext("2d");
@@ -190,21 +191,23 @@ function frame(now) {
 
 async function boot() {
   await loadLocale();
-  await Promise.all([
-    preloadAssets(),
-    document.fonts.load("400 12px PSPixel11"),
-    document.fonts.load("700 12px PSPixel11"),
-    document.fonts.load("400 10px PSPixel9"),
-  ]);
+  await preloadAssets();
   document.title = t("game.title");
   canvas.setAttribute("aria-label", t("game.canvasLabel"));
   document.querySelector("#touch-controls").setAttribute("aria-label", t("touch.controls"));
   document.querySelectorAll("#touch-controls button").forEach((button) => {
     button.setAttribute("aria-label", t(button.dataset.label));
-    if (button.dataset.text) button.textContent = t(button.dataset.text);
+    if (button.dataset.text) button.replaceChildren(textElement(t(button.dataset.text), { bold: true, color: "#3d2b33" }));
   });
   updateMuteButton();
-  document.querySelectorAll("p[data-text]").forEach((el) => { el.textContent = t(el.dataset.text); });
+  // 세로 안내는 세로 화면 폭(좌우 여백 16px)에 맞춰 줄을 나눈다. 글자는 그림이라 읽기용 문구를 따로 둔다
+  const hintWidth = Math.min(screen.width, screen.height) - 32;
+  document.querySelectorAll("p[data-text]").forEach((el) => {
+    const label = document.createElement("span");
+    label.className = "sr-only";
+    label.textContent = t(el.dataset.text);
+    el.replaceChildren(label, textElement(label.textContent, { color: "#bdb2cc", maxWidth: hintWidth }));
+  });
   fit();
   announce("game.title");
   requestAnimationFrame(frame);

@@ -163,6 +163,28 @@ P1 20개 중 **19개 채택**, 게임에 적용했다 (`assets/sprites/`, `src/a
 
 ### Claude Code
 
+#### 2026-09-26: 휴대폰 설정 글꼴 때문에 글자가 뭉개지는 문제 (사용자 제보)
+
+**증상**: 삼성 인터넷 같은 브라우저에서 게임 글자가 휴대폰에 설정한 글꼴로 나와 읽기 어려움
+**원인**: 캔버스 글자를 `fillText` + 웹폰트(PS Pixel)로 그렸다. 삼성 인터넷은 캔버스에서 웹폰트를 무시한다는 개발자 제보가 있고, 그러면 기본 글꼴(사용자 설정 글꼴)로 그려진다. 우리 코드가 알파를 128 기준으로 0/1로 자르므로 일반 글꼴은 12px에서 끊기고 뭉개진다. 이 환경에서는 삼성 인터넷을 재현할 수 없어 원인은 추정이다
+**해결**: 게임이 브라우저 글꼴 엔진을 전혀 쓰지 않게 바꿈
+- `scripts/build-font-atlas.mjs`(신규, `npm run assets:font`): 서브셋 WOFF를 직접 읽어(zlib, 설치 필요 없음) 글자 504자 × 3종의 픽셀·폭·커닝(GPOS 글자 쌍)을 `src/font-data.js`(신규, 자동 생성, 약 66KB)로 뽑는다. 윗선은 크롬 캔버스 `textBaseline = "top"`과 같게 OS/2 typo 값을 em에 맞춰 줄인 위치 (12px: 10.29px, 10px: 9.09px)
+- `src/text.js`: `fillText` 대신 `font-data.js`로 글자 마스크를 만든다(`textMask`). 외곽선·색칠·캐시·`createTextRenderer` 사용법은 그대로라 `render.js`는 수정 없음. DOM용 `textElement` 추가(띄어쓰기 줄바꿈)
+- `src/main.js`: `document.fonts.load` 제거. 점프 버튼 "점프"와 세로 안내 문구를 `textElement` 캔버스로 넣음 (세로 안내는 화면 읽기용 `sr-only` 문구를 따로 둠)
+- `styles.css`: `@font-face`와 `font:` 지정 제거. 세로 안내는 grid 가운데 정렬
+- `.vercelignore`: `assets/fonts/ps-pixel/*.woff`는 배포하지 않음 (라이선스 `OFL.md`·`README.md`는 배포)
+- `tests/font-data.test.js`(신규): 화면에 나오는 글자(ASCII, `ko.json` 전체, 코드·HTML 기호)가 3종 모두 있는지, 비트맵 크기, 폭·커닝
+- 문서: `assets/fonts/ps-pixel/README.md`, `README.md`, `docs/DESIGN.md` 폰트 설명 갱신
+
+**검증**
+- 헤드리스 Chromium에서 예전 방식(`fillText` + 웹폰트)과 새 방식을 `ko.json` 문구 전체 + 504자 전체 + 기호, 3종 × 외곽선 유무로 비교: **420건 모두 폭·픽셀 완전히 같음**
+- `npm test` 26개 통과
+- 실제 게임(헤드리스 Chromium): 데스크톱 960×540 타이틀·배너·일시정지, 터치 844×390, 667×375, 390×844, 320×640. 글자 정상, 폰트 파일 요청 없음, 콘솔 에러·경고 없음. 세로 안내는 320px 폭에서도 한 줄
+- `mockup/build-review.py` 검토 페이지 묶음 정상 (모듈 14개)
+
+**배포**: 미리보기 배포 → 사용자가 휴대폰(삼성 인터넷, 다른 글꼴 설정)에서 **정상 확인** → `npx vercel --prod`로 실제 배포 완료. 공개 사이트에서 `src/font-data.js` 200, 폰트 파일(woff)·문서 404 확인
+**주의**: 문구에 새 글자를 넣으면 `scripts/subset-fonts.py` → `npm run assets:font` 순서로 다시 만든다. 빠뜨리면 테스트가 실패하고, 게임에서는 그 글자가 빈칸으로 나온다(콘솔 경고)
+
 #### 2026-09-26: 디자인 캔버스를 1-1 완성본으로 정리
 
 - 디자인 캔버스 https://claude.ai/artifact/8dDEKCyR1MAC4i743hGEMh 를 지금 게임 기준으로 다시 만듦 (버전 5). 모든 화면 이미지는 실제 게임 코드(`src/`)로 찍은 것이고, 목업 캡처는 더 이상 쓰지 않음

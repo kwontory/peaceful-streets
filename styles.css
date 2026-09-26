@@ -1,7 +1,4 @@
-/* PS Pixel: 게임에 쓰는 글자만 남긴 Galmuri 서브셋 (SIL OFL, 예약 이름 때문에 이름을 바꿈. assets/fonts/ps-pixel/README.md) */
-@font-face { font-family: PSPixel11; font-weight: 400; src: url('./assets/fonts/ps-pixel/PSPixel11.woff') format('woff'); }
-@font-face { font-family: PSPixel11; font-weight: 700; src: url('./assets/fonts/ps-pixel/PSPixel11-Bold.woff') format('woff'); }
-@font-face { font-family: PSPixel9; font-weight: 400; src: url('./assets/fonts/ps-pixel/PSPixel9.woff') format('woff'); }
+/* 글자는 웹폰트를 쓰지 않고 src/font-data.js 의 픽셀로 그린다 (src/text.js). 사용자 설정 글꼴에 흔들리지 않게 */
 html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #2f2a3a; }
 body { display: grid; place-items: center; }
 canvas { display: block; image-rendering: pixelated; image-rendering: crisp-edges; }
@@ -28,7 +25,6 @@ canvas { display: block; image-rendering: pixelated; image-rendering: crisp-edge
     border: 0;
     background: #3d2b33;
     color: #3d2b33;
-    font: 700 12px/1 PSPixel11, sans-serif;
     clip-path: polygon(var(--cut) 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, var(--cut) 100%, 0 calc(100% - var(--cut)), 0 var(--cut));
     display: grid; place-items: center;
     touch-action: none; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent;
@@ -40,7 +36,7 @@ canvas { display: block; image-rendering: pixelated; image-rendering: crisp-edge
     clip-path: polygon(2px 0, calc(100% - 2px) 0, 100% 2px, 100% calc(100% - 2px), calc(100% - 2px) 100%, 2px 100%, 0 calc(100% - 2px), 0 2px);
   }
   .touch-controls svg { width: 24px; height: 24px; fill: currentColor; shape-rendering: crispEdges; }
-  .touch-controls [data-control="jump"] { width: 76px; height: 76px; --cut: 6px; font-size: 12px; }
+  .touch-controls [data-control="jump"] { width: 76px; height: 76px; --cut: 6px; }
   .touch-utility button { width: 40px; height: 40px; --cut: 3px; }
   .touch-utility svg { width: 16px; height: 16px; }
   /* 누르는 동안: 노랗게, 그림자가 사라지며 2px 눌린다 */
@@ -66,7 +62,7 @@ canvas { display: block; image-rendering: pixelated; image-rendering: crisp-edge
 @media (pointer: coarse) and (orientation: portrait) {
   body { place-items: start center; }
   main { padding-top: max(56px, env(safe-area-inset-top)); display: grid; justify-items: center; gap: 20px; }
-  .rotate-hint { display: block; margin: 0; padding-inline: 16px; font: 12px/1.6 PSPixel11, sans-serif; color: #bdb2cc; text-align: center; }
+  .rotate-hint { display: grid; justify-items: center; margin: 0; padding-inline: 16px; }
 }
 @media (pointer: coarse) and (max-width: 360px) {
   .touch-controls button { width: 48px; height: 48px; }

@@ -15,6 +15,8 @@
 
 /assets/fonts/*
 !/assets/fonts/ps-pixel
+# 글자는 src/font-data.js 로 그린다. 폰트 파일은 만들 때만 쓰고, 라이선스 문서만 함께 올린다
+/assets/fonts/ps-pixel/*.woff
 
 # 에셋 옆의 애니메이션 정보는 게임이 읽지 않는다
 /assets/sprites/**/*.json
